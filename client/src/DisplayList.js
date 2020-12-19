@@ -4,8 +4,8 @@ class DisplayList extends Component {
     render() {
         const lists = this.props.lists;
         return (<>
-            <table class="table table-hover table-sm">
-            <thead class="thead-light">
+            <table className="table table-hover table-sm">
+            <thead className="thead-light">
                 <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Edit</th>
@@ -16,8 +16,8 @@ class DisplayList extends Component {
             <tbody>
                 <tr>
                 <td>{item}</td>
-                <td><a href="#" ><i class="fa fa-pencil"></i></a></td>
-                <td> <a href="#" ><i class="fa fa-times"></i></a></td>
+                <td><a href="#" ><i className="fa fa-pencil"></i></a></td>
+                <td> <a href="#" ><i className="fa fa-times"></i></a></td>
                 </tr>
                 
             </tbody>

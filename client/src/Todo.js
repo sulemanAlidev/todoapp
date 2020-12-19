@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Todo.css';
 import DisplayList from './DisplayList';
+import Addtodo from './Addtodo';
 
 class Todo extends Component {
     constructor(){
@@ -14,14 +15,7 @@ class Todo extends Component {
     this.setState({value:e.target.value});
    }
    handleClick=(e)=>{
-       this.setState((state)=>{
-        const lists = state.lists.concat(state.value);
-        return {
-            value:'',
-            lists
-            
-         };
-       })
+    this.setState({ lists: [...this.state.lists, this.state.value],value:'' })
    }
     render() {
        const {lists} = this.state;
@@ -46,6 +40,7 @@ class Todo extends Component {
                             <DisplayList lists={lists}/>
                         </ul>
                     </div>
+                    <Addtodo/>
                 </div>
             </div>
         )
