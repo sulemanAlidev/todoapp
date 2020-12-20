@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import DisplayTodo from './DisplayTodo' 
 
  class Addtodo extends Component {
-     constructor(){
-         super();
+     constructor(props){
+         super(props);
          this.state={
              check:false,
              title:'',
@@ -22,7 +22,11 @@ import DisplayTodo from './DisplayTodo'
     }
     
     render() {
-        const {todolist} = this.state;
+        const {todolist,title} = this.state;
+        let disabled=false
+        if(title=== ''){
+            disabled=true
+        }
         return (
            <div className="col-md-7 ">
                 <input 
@@ -43,12 +47,13 @@ import DisplayTodo from './DisplayTodo'
                         type="button" 
                         className="btn btn-primary" 
                         onClick={this.handleClick}
-                        disabled={!todolist}
+                        disabled={disabled}
                         >Add Todo
                 </button>
 
                 <ul>
-                            <DisplayTodo todolist={todolist}/>
+                  <DisplayTodo todolist={todolist}/>
+                            
                 </ul>
            </div>
         )

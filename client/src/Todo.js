@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Todo.css';
-import DisplayList from './DisplayList';
 import Addtodo from './Addtodo';
 
 class Todo extends Component {
@@ -8,17 +7,22 @@ class Todo extends Component {
         super();
         this.state={
             value: '',
-            lists:[]
+            lists:[],
+            showtodo:false
         }
     }
    handleChange=(e)=>{
     this.setState({value:e.target.value});
    }
    handleClick=(e)=>{
-    this.setState({ lists: [...this.state.lists, this.state.value],value:'' })
+    this.setState({ lists: [...this.state.lists, this.state.value],value:''})
    }
+   changeshowtodo=(e)=>{
+    this.setState({load:!this.state.load})
+   }
+   
     render() {
-       const {lists} = this.state;
+       const {lists,load} = this.state;
 
         return (
             <div className="container mt-3">
@@ -37,10 +41,30 @@ class Todo extends Component {
                             onClick={this.handleClick}
                             >Add</button>
                         <ul>
-                            <DisplayList lists={lists}/>
+                        <table className="table table-hover table-sm">
+                        <thead className="thead-light">
+                            <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        {lists.map(item => (
+                        <tbody onClick={this.changeshowtodo}>
+                            <tr>
+                            <td>{item}</td>
+                            <td><a href="#" ><i className="fa fa-pencil"></i></a></td>
+                            <td> <a href="#" ><i className="fa fa-times"></i></a></td>
+                            </tr>
+                            
+                        </tbody>
+                            ))}
+           
+</table>
                         </ul>
                     </div>
-                    <Addtodo/>
+                    {load == true ? <Addtodo />:'' }
+                    
                 </div>
             </div>
         )
