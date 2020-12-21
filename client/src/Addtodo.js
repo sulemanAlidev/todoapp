@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import DisplayTodo from './DisplayTodo' 
+import DisplayTodo from './DisplayTodo';
+import {connect } from 'react-redux';
+
+import {addTodo} from "./redux/actions/todoActions";
+
 
  class Addtodo extends Component {
      constructor(props){
@@ -7,7 +11,7 @@ import DisplayTodo from './DisplayTodo'
          this.state={
              check:false,
              title:'',
-             date: Date,
+             date: '',
              todolist:[]
 
          }
@@ -17,16 +21,17 @@ import DisplayTodo from './DisplayTodo'
 
      }
      handleClick=(e)=>{
-        this.setState({todolist: [...this.state.todolist,{title:this.state.title, date:this.state.date}],
-        title:'',date:''})
+        const newTodo={
+            title:this.state.title,
+            date:this.state.date
+        }
+        this.props.addTodo(newTodo);
+        this.setState({title:'',date:''})
     }
     
     render() {
-        const {todolist,title} = this.state;
-        let disabled=false
-        if(title=== ''){
-            disabled=true
-        }
+        const {check,date,todolist,title} = this.props.todo;
+        
         return (
            <div className="col-md-7 ">
                 <input 
@@ -47,16 +52,20 @@ import DisplayTodo from './DisplayTodo'
                         type="button" 
                         className="btn btn-primary" 
                         onClick={this.handleClick}
-                        disabled={disabled}
+                        disabled={false}
                         >Add Todo
                 </button>
 
                 <ul>
-                  <DisplayTodo todolist={todolist}/>
+                  <DisplayTodo/>
                             
                 </ul>
            </div>
         )
     }
-}
-export default Addtodo;
+};
+
+const mapStateToProps=(state)=>({
+    todo:state.todo
+})
+export default connect(mapStateToProps,{addTodo})(Addtodo);

@@ -1,36 +1,46 @@
 import React, { Component } from 'react';
-import './Todo.css';
+import './list.css';
 import Addtodo from './Addtodo';
+import {connect } from 'react-redux';
+import {addList,showtodo} from "./redux/actions/listActions";
+import { uuid } from 'uuidv4';
 
-class Todo extends Component {
+class List extends Component {
     constructor(){
         super();
         this.state={
             value: '',
-            lists:[],
-            showtodo:false
         }
     }
    handleChange=(e)=>{
+
     this.setState({value:e.target.value});
    }
    handleClick=(e)=>{
-    this.setState({ lists: [...this.state.lists, this.state.value],value:''})
+    const newList=this.state.value
+    this.props.addList(newList);
+    this.setState({value:''})
+    // this.setState({ lists: [...this.state.lists, this.state.value],value:''})   
    }
    changeshowtodo=(e)=>{
-    this.setState({load:!this.state.load})
+
+    this.props.showtodo();
+
+    // this.setState({showtodo:!this.state.showtodo})
    }
    
     render() {
-       const {lists,load} = this.state;
+    //    const {lists,showtodo,value} = this.state;
+    const {lists,showtodo,value} = this.props.list;
 
+        // console.log(lists)
         return (
             <div className="container mt-3">
                 <div className="row">
                     <div className="col-md-4 section">
                         <input 
                             type="text" 
-                            placeholder='Enter Name of list' 
+                            placeholder='Enter Name of list'
                             onChange={this.handleChange}
                             value={this.state.value}
                         /> 
@@ -49,10 +59,10 @@ class Todo extends Component {
                             <th scope="col">Delete</th>
                             </tr>
                         </thead>
-                        {lists.map(item => (
-                        <tbody onClick={this.changeshowtodo}>
+                        {lists.map((item,index) => (
+                        <tbody key={index} onClick={this.changeshowtodo}>
                             <tr>
-                            <td>{item}</td>
+                            <td >{item}</td>
                             <td><a href="#" ><i className="fa fa-pencil"></i></a></td>
                             <td> <a href="#" ><i className="fa fa-times"></i></a></td>
                             </tr>
@@ -63,11 +73,14 @@ class Todo extends Component {
 </table>
                         </ul>
                     </div>
-                    {load == true ? <Addtodo />:'' }
+                    {showtodo == true ? <Addtodo />:'' }
                     
                 </div>
             </div>
         )
     }
 }
-export default Todo;
+const mapStateToProps= state=>({
+    list:state.list
+})
+export default connect(mapStateToProps,{addList,showtodo})(List);

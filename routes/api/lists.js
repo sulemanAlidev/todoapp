@@ -32,7 +32,7 @@ router.delete('/:list_id',(req,res) =>{
     } );
 
 // @route  api/lists/updatelist
-// @desc    delete list
+// @desc    update list
 // @access public  
 router.post('/:list_id',(req,res) =>{
   const listFields = {};

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import {connect } from 'react-redux';
+
 
 class DisplayTodo extends Component {
     render() {
-        const {todolist} = this.props;
+        const {todolist} = this.props.todo;
         return (<>
             <table className="table table-hover table-sm">
             <thead className="thead-light">
@@ -14,8 +16,8 @@ class DisplayTodo extends Component {
                 <th scope="col">Delete</th>
                 </tr>
             </thead>
-             {todolist.map(item=>(
-                <tbody >
+             {todolist.map((item,index)=>(
+                <tbody key={index} >
                     <tr>
                     <td><a href="#" ><i className="fa fa-times"></i></a></td>
                     <td>{item.title}</td>
@@ -31,5 +33,8 @@ class DisplayTodo extends Component {
         )
     }
 }
+const mapStateToProps=(state)=>({
+    todo:state.todo
+})
 
-export default DisplayTodo;
+export default connect(mapStateToProps)(DisplayTodo);
